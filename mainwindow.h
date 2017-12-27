@@ -26,6 +26,7 @@ private:
 public slots:
     void start();
     void draw();
+//    void nextpage();
     void keyPressEvent(QKeyEvent *event);
 };
 

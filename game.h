@@ -34,6 +34,7 @@ public:
 
 struct Player {
     Rect rect;
+    QPixmap rect_pixmap;
     int score;
     int shoot, freeze;
     bool big, small;
@@ -42,9 +43,8 @@ struct Player {
 class Game
 {
     int width, height;
-    QPixmap pixmap, ball_pixmap, rect_pixmap;
+    QPixmap pixmap, ball_pixmap, freezeBall_pixmap;
     Ball ball, freezeBall;
-    Player player1, player2;
     int timeout;
     int freezetime;
 public:
@@ -57,7 +57,7 @@ public:
  //   void collision(Ball&, Ball&);
     void key_move(int);
     void rect_move(Rect&);
-    void upload_map(QString);
+    Player player1, player2;
 };
 
 #endif // GAME_H

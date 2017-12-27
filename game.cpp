@@ -18,9 +18,9 @@ Game::Game() : width(1100), height(500)
     int rad = width / 110;
     pixmap = QPixmap(width, height);
     ball_pixmap = QPixmap(":/pictures/ball50.png");
-  //  rect_pixmap = QPixmap(":/pictures/rect.png");
     if (ball_pixmap.width() > 0)
         rad = ball_pixmap.width() / 2;
+
     timeout = 50;
     ball.pos = pos;
     ball.vel = vel;
@@ -30,6 +30,7 @@ Game::Game() : width(1100), height(500)
     freezeBall.pos = QVector2D(1.5 * width, 1.5 * height);
     freezeBall.vel = QVector2D(0, 0);
     freezeBall.rad = rad;
+    freezeBall_pixmap = QPixmap(":/pictures/ball20.png");
 
     player1.score = 0;
     player2.score = 0;
@@ -43,20 +44,28 @@ Game::Game() : width(1100), height(500)
     player1.rect.x1 = x1;
     player1.rect.y1 = y1;
     player1.freeze = 0;
+    player1.rect_pixmap = QPixmap(":/pictures/rect1.png");
 
+/*    if (player1.rect_pixmap.width() > 0) {
+        player1.rect.w = player1.rect.w / 4;
+    }
+    if (player1.rect_pixmap.height() > 0) {
+        player1.rect.h = player1.rect.h / 4;
+    }
+*/
     player2.rect.h = h;
     player2.rect.w = w;
     player2.rect.x1 = width - 1.8 * x1;
     player2.rect.y1 = y1;
     player2.freeze = 0;
-
-//    upload_map(":/maps/map.txt");
- //   std::cout << balls.size() << std::endl;
-    /*
-    balls.append(Ball(QVector2D(rad, rad), QVector2D(1, 1), rad));
-    balls.append(Ball(QVector2D(3 * rad, rad), QVector2D(-1, 3), rad));
-    balls.append(Ball(QVector2D(5 * rad, rad), QVector2D(2, -1), rad));
-    */
+    player2.rect_pixmap = QPixmap(":/pictures/rect2.png");
+  /*  if (player2.rect_pixmap.width() > 0) {
+        player2.rect.w = player2.rect.w / 4;
+    }
+    if (player2.rect_pixmap.height() > 0) {
+        player2.rect.h = player2.rect.h / 4;
+    }
+*/
 }
 
 void Game::regame() {
@@ -85,13 +94,23 @@ void Game::regame() {
 
 // рисуем
 void Game::draw(QLabel *label) {
-    pixmap.fill(QColor(Qt::white));
-    QPainter painter(&pixmap);
+    if (player1.score == player2.score) {
+        pixmap.fill(QColor(Qt::white));
+    }
+    else if (player1.score > player2.score) {
+        pixmap.fill(QColor(Qt::cyan));
+    }
+    else {
+        pixmap.fill(QColor(Qt::gray));
+    }
 
+    QPainter painter(&pixmap);
     painter.drawPixmap(ball.pos.x() - ball.rad, ball.pos.y() - ball.rad,
                         ball.rad, ball.rad, ball_pixmap);
-    //painter.drawPixmap(player1.rect.x1, player1.rect.y1, player1.rect.x1 + player1.rect.w, player1.rect.y1 + player1.rect.h, rect_pixmap);
-   // painter.drawPixmap(player2.rect.x1, player2.rect.y1, player2.rect.x1 + player2.rect.w, player2.rect.y1 + player2.rect.h, rect_pixmap);
+ //   painter.drawPixmap(player1.rect.x1, player1.rect.y1, player1.rect.x1 + player1.rect.w,
+   //                    player1.rect.y1 + player1.rect.h, player1.rect_pixmap);
+   // painter.drawPixmap(player2.rect.x1, player2.rect.y1, player2.rect.x1 + player2.rect.w,
+   //                    player2.rect.y1 + player2.rect.h, player2.rect_pixmap);
 
     painter.drawRect(player1.rect.x1, player1.rect.y1, player1.rect.w, player1.rect.h);
     painter.drawRect(player2.rect.x1, player2.rect.y1, player2.rect.w, player2.rect.h);
@@ -103,7 +122,7 @@ void Game::draw(QLabel *label) {
     }
     else if (freezetime == -1) {
         painter.drawPixmap(freezeBall.pos.x() - freezeBall.rad, freezeBall.pos.y() - freezeBall.rad,
-                            freezeBall.rad, freezeBall.rad, ball_pixmap);
+                            freezeBall.rad, freezeBall.rad, freezeBall_pixmap);
     }
     label->setPixmap(pixmap);
 }
@@ -121,7 +140,9 @@ void Game::border(Ball &ball, Rect &rect1, Rect &rect2) {
         timeout++;
     ball.pos = ball.pos + ball.vel;
     QVector2D norm(0, 0), dist_freeze(freezeBall.pos.x() - ball.pos.x(), freezeBall.pos.y() - ball.pos.y());
-    if (timeout == 50 && ball.pos.x() + ball.rad > 1.02 * rect2.x1 &&
+
+    if (timeout == 50 &&
+        ball.pos.x() + ball.rad > 1.02 * rect2.x1 &&
         ball.pos.y() - 0.2 * ball.rad <= rect2.y1 + rect2.h &&
         ball.pos.y() + 0.2 * ball.rad >= rect2.y1)
     {
@@ -130,7 +151,9 @@ void Game::border(Ball &ball, Rect &rect1, Rect &rect2) {
         norm += QVector2D(-1, 0);
         timeout = 0;
     }
-    if (timeout == 50 && ball.pos.x() - ball.rad < rect1.x1 + rect1.w &&
+    if (timeout == 50 &&
+        ball.pos.x() - ball.rad < rect1.x1 + rect1.w &&
+        ball.pos.x() - ball.rad > rect1.x1 + 0.5 * rect1.w &&
         ball.pos.y() - 0.2 * ball.rad <= rect1.y1 + rect1.h &&
         ball.pos.y() + 0.2 * ball.rad >= rect1.y1)
     {
@@ -139,6 +162,7 @@ void Game::border(Ball &ball, Rect &rect1, Rect &rect2) {
         norm += QVector2D(1, 0);
         timeout = 0;
     }
+
     if (ball.pos.y() + ball.rad > height)
         norm += QVector2D(0, -1);
     if (ball.pos.y() - ball.rad < 0)
@@ -179,7 +203,6 @@ void Game::border(Ball &ball, Rect &rect1, Rect &rect2) {
         rect_move(rect2);
     else
         player2.freeze--;
- //   std :: cout << player1.freeze << ' ' << player2.freeze << std::endl;
 }
 
 

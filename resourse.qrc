@@ -2,6 +2,8 @@
     <qresource prefix="/">
         <file>pictures/ball50.png</file>
         <file>maps/map.txt</file>
-        <file>pictures/rect.png</file>
+        <file>pictures/ball20.png</file>
+        <file>pictures/rect1.png</file>
+        <file>pictures/rect2.png</file>
     </qresource>
 </RCC>

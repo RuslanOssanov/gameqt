@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>404</width>
-    <height>307</height>
+    <width>527</width>
+    <height>390</height>
    </rect>
   </property>
   <property name="focusPolicy">
@@ -18,13 +18,6 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
-    <item>
-     <widget class="QLabel" name="label">
-      <property name="text">
-       <string>TextLabel</string>
-      </property>
-     </widget>
-    </item>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
@@ -43,13 +36,6 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton">
-            <property name="text">
-             <string>How To Play?</string>
-            </property>
-           </widget>
-          </item>
-          <item>
            <widget class="QPushButton" name="pushButton_2">
             <property name="text">
              <string>Exit</string>
@@ -62,6 +48,30 @@
       </item>
      </layout>
     </item>
+    <item>
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_2">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_3">
+      <property name="layoutDirection">
+       <enum>Qt::RightToLeft</enum>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -69,7 +79,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>404</width>
+     <width>527</width>
      <height>19</height>
     </rect>
    </property>
@@ -88,39 +98,40 @@
  <resources/>
  <connections>
   <connection>
-   <sender>pushButton_2</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>close()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>113</x>
-     <y>116</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>-30</x>
-     <y>168</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>start</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
    <slot>start()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>212</x>
-     <y>59</y>
+     <x>222</x>
+     <y>124</y>
     </hint>
     <hint type="destinationlabel">
      <x>293</x>
-     <y>328</y>
+     <y>306</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>123</x>
+     <y>242</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>168</y>
     </hint>
    </hints>
   </connection>
  </connections>
  <slots>
   <slot>start()</slot>
+  <slot>nextpage()</slot>
  </slots>
 </ui>
